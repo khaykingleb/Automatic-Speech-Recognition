@@ -1,0 +1,11 @@
+data
+dist
+build
+saved
+wandb
+venv
+__pycache__
+.idea
+.vscode
+.DS_Store
+asr.egg-info
