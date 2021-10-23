@@ -1,5 +1,5 @@
 {
-  "name": "train_quartznet_config",
+  "name": "train_quartznet_ljspeech_config",
   "overfit": false,
   "n_gpu": 2,
   "preprocessing": {
@@ -69,24 +69,25 @@
   },
   "data": {
     "train": {
-      "batch_size": 32,
-      "num_workers": 10,
+      "batch_size": 64,
+      "num_workers": 20,
       "datasets": [
         {
           "type": "LJSpeechDataset",
           "args": {
+            "part": "train"
           }
         }
       ]
     },
     "val": {
-      "batch_size": 32,
-      "num_workers": 10,
+      "batch_size": 64,
+      "num_workers": 20,
       "datasets": [
         {
-          "type": "LibrispeechDataset",
+          "type": "LJSpeechDataset",
           "args": {
-            "part": "dev-clean"
+            "part": "train"
           }
         }
       ]
