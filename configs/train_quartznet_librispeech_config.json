@@ -1,0 +1,142 @@
+{
+  "name": "train_quartznet_librispeech_config",
+  "overfit": false,
+  "n_gpu": 2,
+  "preprocessing": {
+    "sr": 22050,
+    "spectrogram": {
+      "type": "MelSpectrogram",
+      "args": {
+        "sample_rate": 22050,
+        "n_fft": 1024,
+        "win_length": 1024,
+        "hop_length": 256,
+        "n_mels": 64
+      }
+    }
+  },
+  "augmentations": {
+    "wave": [
+      {
+        "type": "GaussianNoiseAugmentation",
+        "args": {
+          "std": 0.005
+        }
+      },
+      {
+        "type": "TimeStretchingAugmentation",
+        "args": {
+          "stretch": "random"
+        }
+      },
+      {
+        "type": "PitchShiftingAugmentation",
+        "args": {
+          "sample_rate": 22050,
+          "n_steps": "random"
+        }
+      },
+      {
+        "type": "VolumeAugmentation",
+        "args": {
+          "gain": "random"
+        }
+      }
+    ],
+    "spectrogram": [
+      {
+        "type": "SpectAugmentation",
+        "args": {
+          "filling_value": "mean",
+          "n_freq_masks": 2,
+          "n_time_masks": 2,
+          "max_freq": 20,
+          "max_time": 30
+        }
+      }
+    ]
+  },
+  "arch": {
+    "type": "QuartzNet",
+    "args": {
+      "n_feats": 64,
+      "hidden_channels": 256,
+      "B": 5,
+      "S": 2,
+      "R": 5,
+      "kernel_sizes_for_blocks": [33, 39, 51, 63, 75]
+    }
+  },
+  "data": {
+    "train": {
+      "batch_size": 64,
+      "num_workers": 20,
+      "datasets": [
+        {
+          "type": "LibrispeechDataset",
+          "args": {
+            "part": "train_all"
+          }
+        }
+      ]
+    },
+    "val": {
+      "batch_size": 64,
+      "num_workers": 20,
+      "datasets": [
+        {
+          "type": "LibrispeechDataset",
+          "args": {
+            "part": "dev-clean"
+          }
+        }
+      ]
+    }
+  },
+  "optimizer": {
+    "type": "Adam",
+    "args": {
+      "lr": 3e-4
+    }
+  },
+  "loss": {
+    "type": "CTCLoss",
+    "args": {}
+  },
+  "metrics": [
+    {
+      "type": "ArgmaxWERMetric",
+      "args": {
+        "name": "WER (argmax)"
+      }
+    },
+    {
+      "type": "ArgmaxCERMetric",
+      "args": {
+        "name": "CER (argmax)"
+      }
+    }
+  ],
+  "lr_scheduler": {
+    "type": "OneCycleLR",
+    "args": {
+      "steps_per_epoch": 100,
+      "epochs": 50,
+      "anneal_strategy": "cos",
+      "max_lr": 4e-3,
+      "pct_start": 0.2
+    }
+  },
+  "trainer": {
+    "epochs": 100,
+    "save_dir": "saved/",
+    "save_period": 5,
+    "verbosity": 2,
+    "monitor": "min val_loss",
+    "early_stop": 100,
+    "visualize": "wandb",
+    "wandb_project": "asr_project",
+    "len_epoch": 100,
+    "grad_norm_clip": 10
+  }
+}
