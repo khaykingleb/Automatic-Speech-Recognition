@@ -52,6 +52,6 @@ class TextEncoder:
 
     @staticmethod
     def normalize_text(text: str):
-        text = text.lower() #TODO: Надо обрабатывать числа
+        text = str(text).lower() #TODO: Надо обрабатывать числа
         text = re.sub(r"[^a-z ]", "", text)
         return text
