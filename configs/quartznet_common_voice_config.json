@@ -75,9 +75,7 @@
         {
           "type": "MozillaCommonVoice",
           "args": {
-            "part": "train",
-            "max_audio_length": 20.0,
-            "max_text_length": 200
+            "part": "train"
           }
         }
       ]
@@ -89,9 +87,7 @@
         {
           "type": "MozillaCommonVoice",
           "args": {
-            "part": "train",
-            "max_audio_length": 20.0,
-            "max_text_length": 200
+            "part": "train"
           }
         }
       ]
