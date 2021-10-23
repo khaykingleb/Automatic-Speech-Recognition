@@ -1,5 +1,11 @@
-from asr.augmentations.wave_augmentations.Gain import Gain
+from asr.augmentations.wave_augmentations.wave_augmentations import GaussianNoiseAugmentation
+from asr.augmentations.wave_augmentations.wave_augmentations import TimeStretchingAugmentation
+from asr.augmentations.wave_augmentations.wave_augmentations import PitchShiftingAugmentation
+from asr.augmentations.wave_augmentations.wave_augmentations import VolumeAugmentation
 
 __all__ = [
-    "Gain"
+    "GaussianNoiseAugmentation",
+    "TimeStretchingAugmentation",
+    "PitchShiftingAugmentation",
+    "VolumeAugmentation"
 ]
