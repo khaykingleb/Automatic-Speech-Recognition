@@ -73,19 +73,8 @@
       "num_workers": 10,
       "datasets": [
         {
-          "type": "MozillaCommonVoice",
-          "args": {
-          }
-        },
-        {
           "type": "LJSpeechDataset",
           "args": {
-          }
-        },
-        {
-          "type": "LibrispeechDataset",
-          "args": {
-            "part": "train-clean-100"
           }
         }
       ]

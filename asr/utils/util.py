@@ -14,18 +14,15 @@ def ensure_dir(dir_name):
     if not dir_name.is_dir():
         dir_name.mkdir(parents=True, exist_ok=False)
 
-
 def read_json(file_name):
     file_name = Path(file_name)
     with file_name.open("rt") as handle:
         return json.load(handle, object_hook=OrderedDict)
 
-
 def write_json(content, file_name):
     file_name = Path(file_name)
     with file_name.open("wt") as handle:
         json.dump(content, handle, indent=4, sort_keys=False)
-
 
 def inf_loop(dataloader):
     """
@@ -34,14 +31,13 @@ def inf_loop(dataloader):
     for loader in repeat(dataloader):
         yield from loader
 
-
 def prepare_device(n_gpu_use):
     """
     Setup GPU device if available. Get gpu device indices which are used for DataParallel.
     """
     n_gpu = torch.cuda.device_count()
     if n_gpu_use > 0 and n_gpu == 0:
-        print("Warning: There's no GPU available on this machine,"
+        print("Warning: There's no GPU available on this machine, "
               "training will be performed on CPU.")
         n_gpu_use = 0
 
