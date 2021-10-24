@@ -71,6 +71,18 @@ class MozillaCommonVoice(BaseDataset):
             self.load_part(part)
 
         df_metadata = pd.read_csv(self._data_dir / "cv-other-train.csv")
+
+        train_size = round(len(df_metadata) * 0.6)
+        val_size = round(len(df_metadata) * 0.2)
+
+        if part == "train":
+            df_metadata = df_metadata[:train_size]
+        elif part == "val":
+            df_metadata = df_metadata[train_size:train_size+val_size]
+        elif part == "test":
+            df_metadata = df_metadata[train_size+val_size:]
+        else:
+            raise ValueError("There is no such part for the given dataset.")
         
         for i in range(len(df_metadata)):
             mp3_path = self._data_dir / df_metadata["filename"][i]

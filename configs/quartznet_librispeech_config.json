@@ -1,5 +1,5 @@
 {
-  "name": "train_quartznet_librispeech_config",
+  "name": "quartznet_librispeech_config",
   "overfit": false,
   "n_gpu": 2,
   "preprocessing": {
@@ -72,10 +72,7 @@
         {
           "type": "LibrispeechDataset",
           "args": {
-            "part": "train-clean-100",
-            "max_audio_length": 20.0,
-            "max_text_length": 200,
-            "data_dir": "/home/jupyter/mnt/s3/bucket-hse-rw/data/datasets/librispeech"
+            "part": "train-clean-500"
           }
         }
       ]
@@ -87,10 +84,7 @@
         {
           "type": "LibrispeechDataset",
           "args": {
-            "part": "dev-clean",
-            "max_audio_length": 20.0,
-            "max_text_length": 200,
-            "data_dir": "/home/jupyter/mnt/s3/bucket-hse-rw/data/datasets/librispeech"
+            "part": "dev-clean"
           }
         }
       ]
@@ -102,10 +96,7 @@
         {
           "type": "LibrispeechDataset",
           "args": {
-            "part": "test-clean",
-            "max_audio_length": 20.0,
-            "max_text_length": 200,
-            "data_dir": "/home/jupyter/mnt/s3/bucket-hse-rw/data/datasets/librispeech"
+            "part": "test-clean"
           }
         }
       ]

@@ -74,7 +74,8 @@
           "args": {
             "part": "train-clean-100",
             "max_audio_length": 20.0,
-            "max_text_length": 200
+            "max_text_length": 200,
+            "data_dir": "/home/jupyter/mnt/s3/bucket-hse-rw/data/datasets/librispeech"
           }
         }
       ]
@@ -88,7 +89,8 @@
           "args": {
             "part": "dev-clean",
             "max_audio_length": 20.0,
-            "max_text_length": 200
+            "max_text_length": 200,
+            "data_dir": "/home/jupyter/mnt/s3/bucket-hse-rw/data/datasets/librispeech"
           }
         }
       ]
@@ -102,7 +104,8 @@
           "args": {
             "part": "test-clean",
             "max_audio_length": 20.0,
-            "max_text_length": 200
+            "max_text_length": 200,
+            "data_dir": "/home/jupyter/mnt/s3/bucket-hse-rw/data/datasets/librispeech"
           }
         }
       ]

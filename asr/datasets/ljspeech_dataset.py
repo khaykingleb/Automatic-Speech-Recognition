@@ -75,12 +75,15 @@ class LJSpeechDataset(BaseDataset):
         df_metadata = pd.read_csv(self._data_dir / 'metadata.csv', sep='|', 
                                   header=None)
 
-        train_size = round(len(df_metadata) * 0.8)
+        train_size = round(len(df_metadata) * 0.6)
+        val_size = round(len(df_metadata) * 0.2)
 
         if part == "train":
             df_metadata = df_metadata[:train_size]
+        elif part == "val":
+            df_metadata = df_metadata[train_size:train_size+val_size]
         elif part == "test":
-            df_metadata = df_metadata[train_size:]
+            df_metadata = df_metadata[train_size+val_size:]
         else:
             raise ValueError("There is no such part for the given dataset.")
         
