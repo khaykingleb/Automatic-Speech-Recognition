@@ -55,12 +55,12 @@ class LibrispeechDataset(BaseDataset):
 
         shutil.unpack_archive(arch_path, self._data_dir)
 
-        for fpath in (self._data_dir / "LibriSpeech").iterdir():
+        for fpath in (self._data_dir).iterdir():
             shutil.move(str(fpath), str(self._data_dir / fpath.name))
 
         os.remove(str(arch_path))
 
-        shutil.rmtree(str(self._data_dir / "LibriSpeech"))
+        shutil.rmtree(str(self._data_dir))
 
     def get_or_load_index(self, part):
         index_path = self._data_dir / f"{part}_index.json"
