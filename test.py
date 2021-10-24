@@ -21,10 +21,10 @@ DEFAULT_CHECKPOINT_PATH = ROOT_PATH / "default_test_model" / "checkpoint.pth"
 def main(config, out_file):
     logger = config.get_logger("test")
 
-    # Text_encoder
+    # Text encoder
     text_encoder = CTCTextEncoder.get_simple_alphabet()
 
-    # Setup data_loader instances
+    # Setup dataloader instances
     dataloaders = get_dataloaders(config, text_encoder)
 
     # Build model architecture
@@ -52,10 +52,11 @@ def main(config, out_file):
     results = []
 
     with torch.no_grad():
-        for i, batch in enumerate(tqdm(dataloaders["test"])):
+        for _, batch in enumerate(tqdm(dataloaders["test"])):
             batch = Trainer.move_batch_to_device(batch, device)
 
-            batch["log_probs"] = model(**batch)
+            batch["logits"] = model(**batch)
+            batch["log_probs"] = torch.nn.functional.log_softmax(batch["logits"], dim=-1)
             batch["log_probs_length"] = model.transform_input_lengths(batch["spectrogram_length"])
             batch["probs"] = batch["log_probs"].exp().cpu()
             batch["argmax"] = batch["probs"].argmax(-1)
@@ -63,11 +64,12 @@ def main(config, out_file):
             for i in range(len(batch["text"])):
                 results.append({"ground_trurh": batch["text"][i],
                                 "pred_text_argmax": text_encoder.ctc_decode(batch["argmax"][i]),
-                                "pred_text_beam_search": text_encoder.ctc_beam_search(batch["probs"], 
-                                                                                      beam_size=100)[:10]})
+                                "pred_text_beam_search": text_encoder\
+                                                         .ctc_beam_search(batch["probs"], 
+                                                                          beam_size=100)[:10]})
+
     with Path(out_file).open('w') as f:
         json.dump(results, f, indent=2)
-
 
 if __name__ == "__main__":
     args = argparse.ArgumentParser(description="PyTorch Template")
