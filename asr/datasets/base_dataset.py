@@ -75,7 +75,8 @@ class BaseDataset(Dataset):
         audio_tensor = audio_tensor[0:1, :]  # remove all channels but the first
         target_sr = self.config_parser["preprocessing"]["sr"]
         if sr != target_sr:
-            audio_tensor = torchaudio.functional.resample(audio_tensor, sr, target_sr)
+            transform = torchaudio.transforms.Resample(sr, target_sr)
+            audio_tensor = transform(audio_tensor)
         return audio_tensor
 
     def process_wave(self, audio_tensor_wave: Tensor):
