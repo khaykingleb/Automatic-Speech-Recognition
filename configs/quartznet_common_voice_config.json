@@ -17,7 +17,7 @@
       {
         "type": "GaussianNoiseAugmentation",
         "args": {
-          "std": 0.005
+          "std": 0.025
         }
       },
       {
