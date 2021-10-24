@@ -1,5 +1,5 @@
 {
-  "name": "quartznet_common_voice_config",
+  "name": "train_quartznet_librispeech_config",
   "overfit": false,
   "n_gpu": 2,
   "preprocessing": {
@@ -8,6 +8,9 @@
       "type": "MelSpectrogram",
       "args": {
         "sample_rate": 22050,
+        "n_fft": 1024,
+        "win_length": 1024,
+        "hop_length": 256,
         "n_mels": 64
       }
     }
@@ -70,44 +73,16 @@
       "num_workers": 20,
       "datasets": [
         {
-          "type": "MozillaCommonVoice",
+          "type": "LibrispeechDataset",
           "args": {
-            "part": "train",
+            "part": "dev-clean",
             "max_audio_length": 20.0,
             "max_text_length": 200
           }
         }
       ]
-    },
-    "val": {
-      "batch_size": 8,
-      "num_workers": 20,
-      "datasets": [
-        {
-          "type": "MozillaCommonVoice",
-          "args": {
-            "part": "train",
-            "max_audio_length": 20.0,
-            "max_text_length": 200
-          }
-        }
-      ]
-    },
-    "test": {
-      "batch_size": 8,
-      "num_workers": 5,
-      "datasets": [
-        {
-          "type": "MozillaCommonVoice",
-          "args": {
-            "part": "test",
-            "max_audio_length": 20.0,
-            "max_text_length": 200
-          }
-        }
-      ]
-    }
-  },
+  }
+},
   "optimizer": {
     "type": "Adam",
     "args": {
