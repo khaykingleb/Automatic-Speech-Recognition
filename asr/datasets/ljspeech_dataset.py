@@ -67,8 +67,9 @@ class LJSpeechDataset(BaseDataset):
     
     def create_index(self, part):
         index = []
-
-        self.load_part(part)
+        split_dir = self._data_dir / part
+        if not split_dir.exists():
+            self.load_part(part)
 
         wavs_dir = self._data_dir / 'wavs'
 
