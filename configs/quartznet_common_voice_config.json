@@ -56,14 +56,14 @@
       "n_feats": 64,
       "hidden_channels": 256,
       "B": 5,
-      "S": 2,
+      "S": 3,
       "R": 5,
       "kernel_sizes_for_blocks": [33, 39, 51, 63, 75]
     }
   },
   "data": {
     "train": {
-      "batch_size": 8,
+      "batch_size": 32,
       "num_workers": 5,
       "datasets": [
         {
@@ -75,7 +75,7 @@
       ]
     },
     "val": {
-      "batch_size": 8,
+      "batch_size": 32,
       "num_workers": 5,
       "datasets": [
         {
@@ -87,7 +87,7 @@
       ]
     },
     "test": {
-      "batch_size": 8,
+      "batch_size": 32,
       "num_workers": 5,
       "datasets": [
         {
