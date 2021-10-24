@@ -67,11 +67,10 @@ class LJSpeechDataset(BaseDataset):
     
     def create_index(self, part):
         index = []
-        split_dir = self._data_dir / part
-        if not split_dir.exists():
-            self.load_part(part)
-
         wavs_dir = self._data_dir / 'wavs'
+
+        if not wavs_dir.exists():
+            self.load_part(part)
 
         df_metadata = pd.read_csv(self._data_dir / 'metadata.csv', sep='|', 
                                   header=None)
