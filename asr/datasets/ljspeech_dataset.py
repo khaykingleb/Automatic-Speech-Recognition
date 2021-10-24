@@ -86,6 +86,8 @@ class LJSpeechDataset(BaseDataset):
             df_metadata = df_metadata[train_size+val_size:]
         else:
             raise ValueError("There is no such part for the given dataset.")
+
+        df_metadata.reset_index(inplace=True)
         
         for i, audio_name in enumerate(df_metadata[0]):
             wav_path = wavs_dir / str(audio_name + '.wav')

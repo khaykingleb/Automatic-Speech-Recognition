@@ -84,6 +84,8 @@ class MozillaCommonVoice(BaseDataset):
         else:
             raise ValueError("There is no such part for the given dataset.")
         
+        df_metadata.reset_index(inplace=True)
+        
         for i in range(len(df_metadata)):
             mp3_path = self._data_dir / df_metadata["filename"][i]
             mp3_path = str(mp3_path.absolute().resolve())
