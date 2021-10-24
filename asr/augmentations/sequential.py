@@ -14,8 +14,8 @@ class SequentialAugmentation:
     def __call__(self, data: Tensor) -> Tensor:
         x = data
 
-        #for augmentation in self.augmentation_list:
-        #    if random.random() < self.AUGMENTATION_PROB:
-        #        x = augmentation(x)
+        for augmentation in self.augmentation_list:
+            if random.random() < self.AUGMENTATION_PROB:
+                x = augmentation(x)
 
         return x
