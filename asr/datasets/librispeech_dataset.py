@@ -78,8 +78,9 @@ class LibrispeechDataset(BaseDataset):
     def create_index(self, part):
         index = []
         split_dir = self._data_dir / part
-        if not split_dir.exists():
-            self.load_part(part)
+        
+        #if not split_dir.exists():
+        #    self.load_part(part)
 
         flac_dirs = set()
         for dirpath, dirnames, filenames in os.walk(str(split_dir)):
