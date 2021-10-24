@@ -3,6 +3,7 @@ import logging
 import os
 import shutil
 
+import random
 import pandas as pd
 
 import torchaudio
@@ -66,11 +67,15 @@ class MozillaCommonVoice(BaseDataset):
     
     def create_index(self, part):
         index = []
-        split_dir = self._data_dir / part
+        split_dir = self._data_dir / "cv-other-train.csv"
         if not split_dir.exists():
             self.load_part(part)
 
         df_metadata = pd.read_csv(self._data_dir / "cv-other-train.csv")
+
+        indexes = df_metadata.index.tolist()
+        random.Random(42).shuffle(indexes)
+        df_metadata = df_metadata.loc[indexes]
 
         train_size = round(len(df_metadata) * 0.6)
         val_size = round(len(df_metadata) * 0.2)
