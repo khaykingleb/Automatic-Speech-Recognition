@@ -6,7 +6,7 @@ from torch import Tensor
 
 class SequentialAugmentation:
 
-    AUGMENTATION_PROB = 0.1
+    AUGMENTATION_PROB = 0.25
 
     def __init__(self, augmentation_list: List[Callable]):
         self.augmentation_list = augmentation_list
