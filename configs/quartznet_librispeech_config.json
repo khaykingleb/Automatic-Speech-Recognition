@@ -44,11 +44,8 @@
       {
         "type": "SpectAugmentation",
         "args": {
-          "filling_value": "mean",
           "n_freq_masks": 2,
-          "n_time_masks": 2,
-          "max_freq": 20,
-          "max_time": 30
+          "n_time_masks": 2
         }
       }
     ]

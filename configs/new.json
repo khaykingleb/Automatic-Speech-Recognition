@@ -1,16 +1,13 @@
 {
   "name": "train_quartznet_librispeech_config",
   "overfit": false,
-  "n_gpu": 2,
+  "n_gpu": 1,
   "preprocessing": {
     "sr": 22050,
     "spectrogram": {
       "type": "MelSpectrogram",
       "args": {
         "sample_rate": 22050,
-        "n_fft": 1024,
-        "win_length": 1024,
-        "hop_length": 256,
         "n_mels": 64
       }
     }
@@ -47,11 +44,8 @@
       {
         "type": "SpectAugmentation",
         "args": {
-          "filling_value": "mean",
           "n_freq_masks": 2,
-          "n_time_masks": 2,
-          "max_freq": 20,
-          "max_time": 30
+          "n_time_masks": 2
         }
       }
     ]
@@ -70,7 +64,7 @@
   "data": {
     "train": {
       "batch_size": 8,
-      "num_workers": 20,
+      "num_workers": 4,
       "datasets": [
         {
           "type": "LibrispeechDataset",
