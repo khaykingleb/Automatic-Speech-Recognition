@@ -36,8 +36,8 @@ class LibrispeechDataset(BaseDataset):
                 data_dir.mkdir(exist_ok=True, parents=True)
             except Exception:
                 print('There is already created directory.')
-
-        self._data_dir = str(data_dir)
+        
+        self._data_dir = Path(data_dir)
 
         if part == 'train_all':
             index = sum([self.get_or_load_index(part)
@@ -48,22 +48,22 @@ class LibrispeechDataset(BaseDataset):
         super().__init__(index, *args, **kwargs)
 
     def load_part(self, part):
-        arch_path = self._data_dir + f"{part}.tar.gz"
+        arch_path = self._data_dir / f"{part}.tar.gz"
 
         print(f"Loading part {part}")
         download_file(URL_LINKS[part], arch_path)
 
         shutil.unpack_archive(arch_path, self._data_dir)
 
-        for fpath in (self._data_dir + "LibriSpeech").iterdir():
-            shutil.move(str(fpath), str(self._data_dir + fpath.name))
+        for fpath in (self._data_dir / "LibriSpeech").iterdir():
+            shutil.move(str(fpath), str(self._data_dir / fpath.name))
 
         os.remove(str(arch_path))
 
-        shutil.rmtree(str(self._data_dir + "LibriSpeech"))
+        shutil.rmtree(str(self._data_dir / "LibriSpeech"))
 
     def get_or_load_index(self, part):
-        index_path = self._data_dir + f"{part}_index.json"
+        index_path = self._data_dir / f"{part}_index.json"
 
         if index_path.exists():
             with index_path.open() as f:
@@ -95,7 +95,7 @@ class LibrispeechDataset(BaseDataset):
                 for line in file:
                     file_id = line.split()[0]
                     file_text = " ".join(line.split()[1:]).strip()
-                    flac_path = flac_dir + f"{file_id}.flac"
+                    flac_path = flac_dir / f"{file_id}.flac"
                     t_info = torchaudio.info(str(flac_path))
                     length = t_info.num_frames / t_info.sample_rate
                     index.append({"path": str(flac_path.absolute().resolve()),
