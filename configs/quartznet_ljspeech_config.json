@@ -126,8 +126,7 @@
   "lr_scheduler": {
     "type": "CosineAnnealingWarmRestarts",
     "args": {
-      "T_0": 1000,
-      "eta_min": 1e-4
+      "T_0": 200
     }
   },
   "trainer": {

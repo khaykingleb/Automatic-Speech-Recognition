@@ -1,5 +1,5 @@
 {
-  "name": "train_quartznet_librispeech_config",
+  "name": "quartznet_ljspeech_config",
   "overfit": false,
   "n_gpu": 1,
   "preprocessing": {
@@ -13,42 +13,8 @@
     }
   },
   "augmentations": {
-    "wave": [
-      {
-        "type": "GaussianNoiseAugmentation",
-        "args": {
-          "std": 0.025
-        }
-      },
-      {
-        "type": "TimeStretchingAugmentation",
-        "args": {
-          "stretch": "random"
-        }
-      },
-      {
-        "type": "PitchShiftingAugmentation",
-        "args": {
-          "sample_rate": 22050,
-          "n_steps": "random"
-        }
-      },
-      {
-        "type": "VolumeAugmentation",
-        "args": {
-          "gain": "random"
-        }
-      }
-    ],
-    "spectrogram": [
-      {
-        "type": "SpectAugmentation",
-        "args": {
-          "n_freq_masks": 2,
-          "n_time_masks": 2
-        }
-      }
-    ]
+    "wave": [],
+    "spectrogram": []
   },
   "arch": {
     "type": "QuartzNet",
@@ -64,42 +30,36 @@
   "data": {
     "train": {
       "batch_size": 32,
-      "num_workers": 5,
+      "num_workers": 4,
       "datasets": [
         {
-          "type": "LibrispeechDataset",
+          "type": "LJSpeechDataset",
           "args": {
-            "part": "train-clean-360",
-            "max_audio_length": 20.0,
-            "max_text_length": 200
+            "part": "train"
           }
         }
       ]
     },
     "val": {
       "batch_size": 32,
-      "num_workers": 5,
+      "num_workers": 4,
       "datasets": [
         {
-          "type": "LibrispeechDataset",
+          "type": "LJSpeechDataset",
           "args": {
-            "part": "dev-clean",
-            "max_audio_length": 20.0,
-            "max_text_length": 200
+            "part": "val"
           }
         }
       ]
     },
     "test": {
       "batch_size": 32,
-      "num_workers": 5,
+      "num_workers": 4,
       "datasets": [
         {
-          "type": "LibrispeechDataset",
+          "type": "LJSpeechDataset",
           "args": {
-            "part": "test-clean",
-            "max_audio_length": 20.0,
-            "max_text_length": 200
+            "part": "test"
           }
         }
       ]
@@ -136,7 +96,7 @@
     }
   },
   "trainer": {
-    "epochs": 150,
+    "epochs": 40,
     "save_dir": "saved/",
     "save_period": 5,
     "verbosity": 2,
