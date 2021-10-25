@@ -133,8 +133,10 @@
     "type": "OneCycleLR",
     "args": {
       "steps_per_epoch": 100,
+      "epochs": 50,
       "anneal_strategy": "cos",
-      "max_lr": 1e-2
+      "max_lr": 4e-3,
+      "pct_start": 0.2
     }
   },
   "trainer": {
