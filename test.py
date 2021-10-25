@@ -14,7 +14,7 @@ from asr.trainer import Trainer
 from asr.utils import ROOT_PATH
 from asr.utils.parse_config import ConfigParser
 
-DEFAULT_TEST_CONFIG_PATH = ROOT_PATH / "default_test_config.json"
+DEFAULT_TEST_CONFIG_PATH = ROOT_PATH / "default_test_model" / "config.json"
 DEFAULT_CHECKPOINT_PATH = ROOT_PATH / "default_test_model" / "checkpoint.pth"
 
 
