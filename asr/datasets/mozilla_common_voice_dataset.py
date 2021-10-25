@@ -37,7 +37,7 @@ class MozillaCommonVoice(BaseDataset):
         super().__init__(index, *args, **kwargs)
 
     def load_part(self, part):
-        arch_path = self._data_dir / f"{part}.tar.gz"
+        arch_path = self._data_dir / "cv_corpus_v1.tar.gz"
 
         print(f"Loading Mozilla Common Voice")
         download_file(URL, arch_path)
@@ -53,7 +53,7 @@ class MozillaCommonVoice(BaseDataset):
 
     def get_or_load_index(self, part):
 
-        index_path = self._data_dir / "mozilla_common_voice_index.json"
+        index_path = self._data_dir / f"{part}_index.json"
 
         if index_path.exists():
             with index_path.open() as f:

@@ -8,16 +8,23 @@ Implementation of two models for the Automatic Speech Recognition problem.
     <img src="img/quartznet_arch.png">
 </p>
 
-2. Deepspeech 
+2. Deepspeech:
+
+<p>
+    <img src="img/deepspeech.png">
+</p>
+
 
 ## Getting Started
 
 ```
-git clone https://github.com/khaykingleb/QuartzNet-ASR.git
-cd QuartzNet-ASR
+git clone https://github.com/khaykingleb/ASR.git
+cd ASR
 pip install -r requirements.txt
-pip install .
+python setup.py install
 ```
+
+Or just open in Google Colab notebook:
 
 ## Data Used
 
