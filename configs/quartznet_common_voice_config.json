@@ -2,7 +2,6 @@
   "name": "quartznet_common_voice_config",
   "overfit": false,
   "n_gpu": 1,
-  "spectrogram_highlight": "log",
   "preprocessing": {
     "sr": 22050,
     "spectrogram": {

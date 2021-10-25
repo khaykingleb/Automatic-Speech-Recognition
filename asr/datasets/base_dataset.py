@@ -17,14 +17,9 @@ logger = logging.getLogger(__name__)
 
 def normalize_spectrogram(type: str, spectrogram: Tensor) -> Tensor:
     spectrogram = torch.log(torch.clamp(spectrogram, min=1e-16))
-
-    if type == "standard":
-        normalized_spectrogram = (spectrogram - torch.mean(spectrogram, dim=1, keepdim=True)) \
-                                / (torch.std(spectrogram, dim=1, keepdim=True) + 1e-16)
-    elif type == "log":
-        normalized_spectrogram = spectrogram.log()
-    else:
-        raise ValueError("There is no such normalization.")
+    
+    normalized_spectrogram = (spectrogram - torch.mean(spectrogram, dim=1, keepdim=True)) \
+                            / (torch.std(spectrogram, dim=1, keepdim=True) + 1e-16)
 
     return normalized_spectrogram
 
@@ -103,7 +98,7 @@ class BaseDataset(Dataset):
                                                     torchaudio.transforms)
             
             audio_tensor_spec = wave2spec(audio_tensor_wave)
-            audio_tensor_spec = normalize_spectrogram(self.config_parser["spectrogram_highlight"], audio_tensor_spec)
+            audio_tensor_spec = normalize_spectrogram(audio_tensor_spec)
 
             if self.spec_augs is not None:
                 audio_tensor_spec = self.spec_augs(audio_tensor_spec)

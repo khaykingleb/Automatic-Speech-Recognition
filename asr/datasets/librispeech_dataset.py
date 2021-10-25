@@ -26,84 +26,76 @@ URL_LINKS = {
 }
 
 class LibrispeechDataset(BaseDataset):
-
-    def __init__(self, part, data_dir=None, *args, **kwargs):
+    def __init__(self, part, data_dir=None, split=None, *args, **kwargs):
         assert part in URL_LINKS or part == 'train_all'
 
         if data_dir is None:
-            try:
-                data_dir = ROOT_PATH / "data" / "datasets" / "librispeech"
-                data_dir.mkdir(exist_ok=True, parents=True)
-            except Exception:
-                print('There is already created directory.')
-        
-        self._data_dir = Path(data_dir)
+            data_dir = ROOT_PATH / "data" / "datasets" / "librispeech"
+            data_dir.mkdir(exist_ok=True, parents=True)
 
+        self._data_dir = data_dir
         if part == 'train_all':
-            index = sum([self.get_or_load_index(part)
+            index = sum([self._get_or_load_index(part)
                          for part in URL_LINKS if 'train' in part], [])
         else:
-            index = self.get_or_load_index(part)
+            index = self._get_or_load_index(part)
 
         super().__init__(index, *args, **kwargs)
 
-    def load_part(self, part):
+    def _load_part(self, part):
         arch_path = self._data_dir / f"{part}.tar.gz"
 
         print(f"Loading part {part}")
-        download_file(URL_LINKS[part], arch_path)
 
+        download_file(URL_LINKS[part], arch_path)
         shutil.unpack_archive(arch_path, self._data_dir)
 
-        for fpath in (self._data_dir).iterdir():
+        for fpath in (self._data_dir / "LibriSpeech").iterdir():
             shutil.move(str(fpath), str(self._data_dir / fpath.name))
 
         os.remove(str(arch_path))
+        shutil.rmtree(str(self._data_dir / "LibriSpeech"))
 
-        shutil.rmtree(str(self._data_dir))
-
-    def get_or_load_index(self, part):
+    def _get_or_load_index(self, part):
         index_path = self._data_dir / f"{part}_index.json"
 
         if index_path.exists():
             with index_path.open() as f:
                 index = json.load(f)
         else:
-            index = self.create_index(part)
+            index = self._create_index(part)
             with index_path.open("w") as f:
                 json.dump(index, f, indent=2)
 
         return index
-    
-    def create_index(self, part):
+
+    def _create_index(self, part):
         index = []
         split_dir = self._data_dir / part
-        
+
         if not split_dir.exists():
-            self.load_part(part)
+            self._load_part(part)
 
         flac_dirs = set()
         for dirpath, dirnames, filenames in os.walk(str(split_dir)):
             if any([f.endswith(".flac") for f in filenames]):
                 flac_dirs.add(dirpath)
-
-        for flac_dir in tqdm(list(flac_dirs), 
-                             desc=f"Preparing librispeech folders: {part}"):
+        for flac_dir in tqdm(list(flac_dirs), desc=f"Preparing librispeech folders: {part}"):
             flac_dir = Path(flac_dir)
             trans_path = list(flac_dir.glob("*.trans.txt"))[0]
 
-            with trans_path.open() as file:
-                for line in file:
-                    file_id = line.split()[0]
-                    file_text = " ".join(line.split()[1:]).strip()
-                    flac_path = flac_dir / f"{file_id}.flac"
+            with trans_path.open() as f:
+                for line in f:
+                    f_id = line.split()[0]
+                    f_text = " ".join(line.split()[1:]).strip()
+                    flac_path = flac_dir / f"{f_id}.flac"
                     t_info = torchaudio.info(str(flac_path))
                     length = t_info.num_frames / t_info.sample_rate
                     index.append({"path": str(flac_path.absolute().resolve()),
-                                  "text": file_text.lower(),
+                                  "text": f_text.lower(),
                                   "audio_len": length})
-                                  
         return index
+
 
 if __name__ == "__main__":
     text_encoder = CTCTextEncoder.get_simple_alphabet()

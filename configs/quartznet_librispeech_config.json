@@ -1,7 +1,6 @@
 {
   "name": "quartznet_librispeech_config",
   "overfit": false,
-  "spectrogram_highlight": "log",
   "n_gpu": 1,
   "preprocessing": {
     "sr": 22050,
@@ -70,7 +69,7 @@
         {
           "type": "LibrispeechDataset",
           "args": {
-            "part": "train-clean-500"
+            "part": "train-clean-360"
           }
         }
       ]
