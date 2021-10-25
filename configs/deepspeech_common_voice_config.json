@@ -1,9 +1,13 @@
 {
   "name": "deepspeech_common_voice_config",
+  "is_first_to_train_model": false,
+  "model_path": "trained_models/deepspeech_common_voice.pth",
+  "previous_model_path": "trained_models/deepspeech_librispeech.pth",
   "overfit": false,
   "n_gpu": 1,
   "preprocessing": {
     "sr": 22050,
+    "spectrogram_normalization": true,
     "spectrogram": {
       "type": "MelSpectrogram",
       "args": {

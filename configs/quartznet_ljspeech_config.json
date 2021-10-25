@@ -1,9 +1,13 @@
 {
   "name": "quartznet_ljspeech_config",
+  "is_first_to_train_model": true,
+  "model_path": "trained_models/quartznet_ljspeech.pth",
+  "previous_model_path": "",
   "overfit": false,
   "n_gpu": 1,
   "preprocessing": {
     "sr": 22050,
+    "spectrogram_normalization": true,
     "spectrogram": {
       "type": "MelSpectrogram",
       "args": {

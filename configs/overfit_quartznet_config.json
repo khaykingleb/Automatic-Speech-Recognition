@@ -1,9 +1,12 @@
 {
   "name": "overfit_quartznet_config",
+  "is_first_to_train_model": true,
+  "model_path": "trained_models/overfit_quartznet.pth",
   "overfit": true,
   "n_gpu": 1,
   "preprocessing": {
     "sr": 22050,
+    "spectrogram_normalization": true,
     "spectrogram": {
       "type": "MelSpectrogram",
       "args": {

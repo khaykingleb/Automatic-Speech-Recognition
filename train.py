@@ -49,6 +49,9 @@ def main(config):
 
     # Build model architecture, then print to console
     model = config.init_obj(config["arch"], module_arch, n_class=len(text_encoder.char_to_index))
+    if not config["is_first_to_train_model"]:
+        model.load_state_dict(torch.load(config["previous_model_path"]))
+        print("Downloaded the pretrained model.")
     logger.info(model)
 
     # Prepare for (multi-device) GPU training
