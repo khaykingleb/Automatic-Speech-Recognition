@@ -1,5 +1,5 @@
 {
-  "name": "quartznet_librispeech_config",
+  "name": "quartznet_common_voice_config",
   "overfit": false,
   "n_gpu": 1,
   "preprocessing": {
@@ -17,14 +17,13 @@
     "spectrogram": []
   },
   "arch": {
-    "type": "QuartzNet",
+    "type": "Deepspeech",
     "args": {
       "n_feats": 64,
-      "hidden_channels": 256,
-      "B": 5,
-      "S": 3,
-      "R": 5,
-      "kernel_sizes_for_blocks": [33, 39, 51, 63, 75]
+      "fc_hidden": 512, 
+      "fc_dropout": 0.1,
+      "gru_hidden": 512,
+      "gru_num_layers": 3
     }
   },
   "data": {
@@ -33,9 +32,9 @@
       "num_workers": 5,
       "datasets": [
         {
-          "type": "LibrispeechDataset",
+          "type": "MozillaCommonVoice",
           "args": {
-            "part": "train-clean-360"
+            "part": "train"
           }
         }
       ]
@@ -45,9 +44,9 @@
       "num_workers": 5,
       "datasets": [
         {
-          "type": "LibrispeechDataset",
+          "type": "MozillaCommonVoice",
           "args": {
-            "part": "dev-clean"
+            "part": "val"
           }
         }
       ]
@@ -57,9 +56,9 @@
       "num_workers": 5,
       "datasets": [
         {
-          "type": "LibrispeechDataset",
+          "type": "MozillaCommonVoice",
           "args": {
-            "part": "test-clean"
+            "part": "test"
           }
         }
       ]

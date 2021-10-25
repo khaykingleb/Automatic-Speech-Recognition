@@ -1,5 +1,5 @@
 {
-  "name": "quartznet_common_voice_config",
+  "name": "quartznet_ljspeech_config",
   "overfit": false,
   "n_gpu": 1,
   "preprocessing": {
@@ -51,23 +51,22 @@
     ]
   },
   "arch": {
-    "type": "QuartzNet",
+    "type": "Deepspeech",
     "args": {
       "n_feats": 64,
-      "hidden_channels": 256,
-      "B": 5,
-      "S": 3,
-      "R": 5,
-      "kernel_sizes_for_blocks": [33, 39, 51, 63, 75]
+      "fc_hidden": 512,
+      "fc_dropout": 0.1,
+      "gru_hidden": 512,
+      "gru_num_layers": 3
     }
   },
   "data": {
     "train": {
       "batch_size": 32,
-      "num_workers": 5,
+      "num_workers": 4,
       "datasets": [
         {
-          "type": "MozillaCommonVoice",
+          "type": "LJSpeechDataset",
           "args": {
             "part": "train"
           }
@@ -76,10 +75,10 @@
     },
     "val": {
       "batch_size": 32,
-      "num_workers": 5,
+      "num_workers": 4,
       "datasets": [
         {
-          "type": "MozillaCommonVoice",
+          "type": "LJSpeechDataset",
           "args": {
             "part": "val"
           }
@@ -88,10 +87,10 @@
     },
     "test": {
       "batch_size": 32,
-      "num_workers": 5,
+      "num_workers": 4,
       "datasets": [
         {
-          "type": "MozillaCommonVoice",
+          "type": "LJSpeechDataset",
           "args": {
             "part": "test"
           }
@@ -130,7 +129,7 @@
     }
   },
   "trainer": {
-    "epochs": 150,
+    "epochs": 100,
     "save_dir": "saved/",
     "save_period": 5,
     "verbosity": 2,

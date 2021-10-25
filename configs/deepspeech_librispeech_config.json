@@ -1,5 +1,5 @@
 {
-  "name": "quartznet_ljspeech_config",
+  "name": "quartznet_librispeech_config",
   "overfit": false,
   "n_gpu": 1,
   "preprocessing": {
@@ -13,53 +13,86 @@
     }
   },
   "augmentations": {
-    "wave": [],
-    "spectrogram": []
+    "wave": [
+      {
+        "type": "GaussianNoiseAugmentation",
+        "args": {
+          "std": 0.025
+        }
+      },
+      {
+        "type": "TimeStretchingAugmentation",
+        "args": {
+          "stretch": "random"
+        }
+      },
+      {
+        "type": "PitchShiftingAugmentation",
+        "args": {
+          "sample_rate": 22050,
+          "n_steps": "random"
+        }
+      },
+      {
+        "type": "VolumeAugmentation",
+        "args": {
+          "gain": "random"
+        }
+      }
+    ],
+    "spectrogram": [
+      {
+        "type": "SpectAugmentation",
+        "args": {
+          "n_freq_masks": 2,
+          "n_time_masks": 2
+        }
+      }
+    ]
   },
   "arch": {
-    "type": "QuartzNet",
+    "type": "Deepspeech",
     "args": {
       "n_feats": 64,
-      "hidden_channels": 256,
-      "B": 5,
-      "S": 3,
-      "R": 5,
-      "kernel_sizes_for_blocks": [33, 39, 51, 63, 75]
+      "fc_hidden": 512,
+      "fc_dropout": 0.1,
+      "gru_hidden": 512,
+      "gru_num_layers": 3
     }
   },
   "data": {
     "train": {
       "batch_size": 32,
-      "num_workers": 4,
+      "num_workers": 5,
       "datasets": [
         {
-          "type": "LJSpeechDataset",
+          "type": "LibrispeechDataset",
           "args": {
-            "part": "train"
+            "part": "train-clean-360"
           }
         }
       ]
     },
     "val": {
       "batch_size": 32,
-      "num_workers": 4,
+      "num_workers": 5,
       "datasets": [
         {
-          "type": "LJSpeechDataset",
+          "type": "LibrispeechDataset",
           "args": {
-            "part": "val"
+            "part": "dev-clean"
           }
         }
       ]
     },
     "test": {
       "batch_size": 32,
-      "num_workers": 4,
+      "num_workers": 5,
       "datasets": [
         {
-          "type": "LJSpeechDataset",
+          "type": "LibrispeechDataset",
           "args": {
-            "part": "test"
+            "part": "test-clean"
           }
         }
       ]
@@ -96,7 +129,7 @@
     }
   },
   "trainer": {
-    "epochs": 40,
+    "epochs": 150,
     "save_dir": "saved/",
     "save_period": 5,
     "verbosity": 2,
