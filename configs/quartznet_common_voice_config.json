@@ -123,18 +123,15 @@
       }
     }
   ],
-  "lr_scheduler": {
-    "type": "OneCycleLR",
+   "lr_scheduler": {
+    "type": "CosineAnnealingWarmRestarts",
     "args": {
-      "steps_per_epoch": 100,
-      "epochs": 50,
-      "anneal_strategy": "cos",
-      "max_lr": 4e-3,
-      "pct_start": 0.2
+      "T_0": 100,
+      "eta_min": 1e-4
     }
   },
   "trainer": {
-    "epochs": 100,
+    "epochs": 150,
     "save_dir": "saved/",
     "save_period": 5,
     "verbosity": 2,
