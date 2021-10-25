@@ -15,7 +15,7 @@ from asr.utils.parse_config import ConfigParser
 logger = logging.getLogger(__name__)
 
 
-def normalize_spectrogram(type: str, spectrogram: Tensor) -> Tensor:
+def normalize_spectrogram(spectrogram: Tensor) -> Tensor:
     spectrogram = torch.log(torch.clamp(spectrogram, min=1e-16))
     
     normalized_spectrogram = (spectrogram - torch.mean(spectrogram, dim=1, keepdim=True)) \
