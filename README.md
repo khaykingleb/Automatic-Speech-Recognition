@@ -1,10 +1,14 @@
-# QuartzNet
+# Automatic Speech Recognition
 
-Implementation of the [QuartzNet](https://arxiv.org/abs/1910.10261)-(BxS)xR architecture for the Automatic Speech Recognition:
+Implementation of two models for the Automatic Speech Recognition problem.
+
+1.[QuartzNet](https://arxiv.org/abs/1910.10261)-(BxS)xR architecture for the Automatic Speech Recognition:
 
 <p>
     <img src="img/quartznet_arch.png">
 </p>
+
+2. Deepspeech 
 
 ## Getting Started
 
