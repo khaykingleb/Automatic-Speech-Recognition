@@ -46,7 +46,6 @@ class BaseTrainer:
         self.start_epoch = 1
 
         self.checkpoint_dir = config.save_dir
-        self.trained_model_path = config.model_path
 
         # Setup visualization writer instance
         self.writer = get_visualizer(config, self.logger, cfg_trainer["visualize"])
@@ -149,11 +148,11 @@ class BaseTrainer:
             self.logger.info("Saving checkpoint: {} ...".format(filename))
 
         if save_best:
-            #best_path = str(self.checkpoint_dir / "model_best.pth")
-            #torch.save(state, best_path)
-            #self.logger.info("Saving current best: model_best.pth ...")
-            best_path = str(self.trained_model_path)
+            best_path = str(self.checkpoint_dir / "model_best.pth")
             torch.save(state, best_path)
+            self.logger.info("Saving current best: model_best.pth ...")
+            #best_path = str(self.trained_model_path)
+            #torch.save(state, best_path)
 
     def resume_checkpoint(self, resume_path):
         """
