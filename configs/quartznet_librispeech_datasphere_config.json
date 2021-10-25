@@ -129,13 +129,13 @@
       }
     }
   ],
- "lr_scheduler": {
-  "type": "CosineAnnealingWarmRestarts",
-  "args": {
-    "T_0": 100,
-    "eta_min": 1e-4
-  }
-},
+  "lr_scheduler": {
+    "type": "CosineAnnealingWarmRestarts",
+    "args": {
+      "T_0": 1000,
+      "eta_min": 1e-4
+    }
+  },
   "trainer": {
     "epochs": 150,
     "save_dir": "saved/",
