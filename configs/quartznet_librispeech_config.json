@@ -123,10 +123,11 @@
       }
     }
   ],
-  "lr_scheduler": {
-    "type": "CosineAnnealingWarmRestarts",
+ "lr_scheduler": {
+    "type": "OneCycleLR",
     "args": {
-      "T_0": 100
+      "steps_per_epoch": 100,
+      "anneal_strategy": "cos"
     }
   },
   "trainer": {
