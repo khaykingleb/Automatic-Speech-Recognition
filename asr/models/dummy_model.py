@@ -11,7 +11,6 @@ class DummyModel(BaseModel):
     def __init__(self, n_feats, n_class, gru_hidden=512, gru_num_layers=3, 
                  gru_dropout=0, *args, **kwargs):
         super().__init__(n_feats, n_class, *args, **kwargs)
-
         self.gru_hidden = gru_hidden
         self.gru_num_layers = gru_num_layers
 
