@@ -88,7 +88,7 @@
   },
   "trainer": {
     "epochs": 50,
-    "save_dir": "saved/",
+    "save_dir": "ASR/saved/",
     "save_period": 5,
     "verbosity": 2,
     "monitor": "min val_loss",
