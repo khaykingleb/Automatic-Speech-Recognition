@@ -13,42 +13,8 @@
     }
   },
   "augmentations": {
-    "wave": [
-      {
-        "type": "GaussianNoiseAugmentation",
-        "args": {
-          "std": 0.025
-        }
-      },
-      {
-        "type": "TimeStretchingAugmentation",
-        "args": {
-          "stretch": "random"
-        }
-      },
-      {
-        "type": "PitchShiftingAugmentation",
-        "args": {
-          "sample_rate": 22050,
-          "n_steps": "random"
-        }
-      },
-      {
-        "type": "VolumeAugmentation",
-        "args": {
-          "gain": "random"
-        }
-      }
-    ],
-    "spectrogram": [
-      {
-        "type": "SpectAugmentation",
-        "args": {
-          "n_freq_masks": 2,
-          "n_time_masks": 2
-        }
-      }
-    ]
+    "wave": [],
+    "spectrogram": []
   },
   "arch": {
     "type": "QuartzNet",
@@ -126,7 +92,7 @@
   "lr_scheduler": {
     "type": "CosineAnnealingWarmRestarts",
     "args": {
-      "T_0": 200
+      "T_0": 100
     }
   },
   "trainer": {
