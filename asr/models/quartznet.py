@@ -141,4 +141,4 @@ class QuartzNet(BaseModel):
 
     def transform_input_lengths(self, input_lengths):
         transformed_input_lengths = torch.floor((input_lengths - 33) / 2 + 1) + 16
-        return transformed_input_lengths
+        return transformed_input_lengths.int()
