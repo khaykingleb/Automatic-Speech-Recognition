@@ -1,5 +1,5 @@
 {
-  "name": "quartznet_librispeech_config",
+  "name": "deepspeech_librispeech_config",
   "overfit": false,
   "n_gpu": 1,
   "preprocessing": {

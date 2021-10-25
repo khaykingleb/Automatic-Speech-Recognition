@@ -1,5 +1,5 @@
 {
-  "name": "quartznet_common_voice_config",
+  "name": "deepspeech_common_voice_config",
   "overfit": false,
   "n_gpu": 1,
   "preprocessing": {
