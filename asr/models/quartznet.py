@@ -140,9 +140,5 @@ class QuartzNet(BaseModel):
         return {"logits": output.permute(0, 2, 1)}
 
     def transform_input_lengths(self, input_lengths):
-        #TODO: Исправить
-        transformed_input_lengths = torch.tensor([self \
-                                                  .forward(torch.rand(1, length, self.n_feats) \
-                                                  .to(device))['logits'].shape[1] \
-                                                  for length in input_lengths])
+        transformed_input_lengths = torch.floor((input_lengths - 33) / 2 + 1) + 16
         return transformed_input_lengths
