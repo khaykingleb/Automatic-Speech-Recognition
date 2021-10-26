@@ -100,7 +100,6 @@ if __name__ == "__main__":
     args.add_argument("-t",
                       "--test-data-folder",
                       default=None,
-                      required=True,
                       type=str,
                       help="Path to dataset")
 
@@ -119,19 +118,4 @@ if __name__ == "__main__":
     test_data_folder = Path(args.test_data_folder)
 
     config = ConfigParser.from_args(DEFAULT_TEST_CONFIG_PATH)
-    config.config["data"] = {
-        "test": {
-            "batch_size": args.batch_size,
-            "num_workers": args.jobs,
-            "datasets": [
-                {
-                    "type": "CustomDirAudioDataset",
-                    "args": {
-                        "audio_dir": test_data_folder / "audio",
-                        "transcription_dir": test_data_folder / "transcriptions",
-                    }
-                }
-            ]
-        }
-    }
     main(config, args.output)
