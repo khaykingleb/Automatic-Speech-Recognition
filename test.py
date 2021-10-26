@@ -73,8 +73,10 @@ def main(config, out_file=None):
     with Path(out_file).open('w') as f:
         json.dump(results, f, indent=2)
 
+
 if __name__ == "__main__":
     args = argparse.ArgumentParser(description="PyTorch Template")
+
     args.add_argument("-c",
                       "--config",
                       default=str(DEFAULT_TEST_CONFIG_PATH.absolute().resolve()),
