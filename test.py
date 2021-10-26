@@ -18,7 +18,7 @@ DEFAULT_TEST_CONFIG_PATH = ROOT_PATH / "default_test_model" / "config.json"
 DEFAULT_CHECKPOINT_PATH = ROOT_PATH / "default_test_model" / "checkpoint.pth"
 
 
-def test_main(config, out_file):
+def main(config, out_file):
     logger = config.get_logger("test")
 
     # Text encoder
@@ -118,4 +118,4 @@ if __name__ == "__main__":
     test_data_folder = Path(args.test_data_folder)
 
     config = ConfigParser.from_args(DEFAULT_TEST_CONFIG_PATH)
-    test_main(config, args.output)
+    main(config, args.output)

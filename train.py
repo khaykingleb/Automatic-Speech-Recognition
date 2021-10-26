@@ -36,7 +36,7 @@ torch.backends.cudnn.deterministic = True
 os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:2"
 
 
-def train_main(config):
+def main(config):
     logger = config.get_logger("train")
 
     # Text_encoder
@@ -112,4 +112,4 @@ if __name__ == "__main__":
                CustomArgs(["--bs", "--batch_size"], type=int, target="data_loader;args;batch_size")]
 
     config = ConfigParser.from_args(args, options)
-    train_main(config)
+    main(config)
