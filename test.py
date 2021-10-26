@@ -18,7 +18,7 @@ DEFAULT_TEST_CONFIG_PATH = ROOT_PATH / "default_test_model" / "config.json"
 DEFAULT_CHECKPOINT_PATH = ROOT_PATH / "default_test_model" / "checkpoint.pth"
 
 
-def main(config, out_file):
+def main(config, out_file=None):
     logger = config.get_logger("test")
 
     # Text encoder
@@ -67,6 +67,8 @@ def main(config, out_file):
                                 "pred_text_beam_search": text_encoder\
                                                          .ctc_beam_search(batch["probs"], 
                                                                           beam_size=100)[:10]})
+
+    out_file = "default_test_model/results.json" if out_file is None else out_file
 
     with Path(out_file).open('w') as f:
         json.dump(results, f, indent=2)
