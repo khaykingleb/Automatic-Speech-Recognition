@@ -72,7 +72,9 @@
         {
           "type": "LibrispeechDataset",
           "args": {
-            "part": "train-clean-360"
+            "part": "train_all",
+            "max_audio_length": 20.0,
+            "max_text_length": 200
           }
         }
       ]
