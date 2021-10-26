@@ -77,8 +77,8 @@ class MozillaCommonVoice(BaseDataset):
         random.Random(42).shuffle(indexes)
         df_metadata = df_metadata.loc[indexes]
 
-        train_size = round(len(df_metadata) * 0.6)
-        val_size = round(len(df_metadata) * 0.2)
+        train_size = round(len(df_metadata) * 0.75)
+        val_size = round(len(df_metadata) * 0.05)
 
         if part == "train":
             df_metadata = df_metadata[:train_size]
