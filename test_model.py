@@ -7,6 +7,7 @@ from tqdm import tqdm
 
 from asr.datasets.utils import get_dataloaders
 from asr.text_encoder.ctc_text_encoder import CTCTextEncoder
+from asr.text_encoder.text_encoder import get_simple_alphabet
 import asr.models as module_model
 import asr.loss as module_loss
 import asr.metrics as module_metric
@@ -22,7 +23,7 @@ def main(config, out_file=None):
     logger = config.get_logger("test")
 
     # Text encoder
-    text_encoder = CTCTextEncoder.get_simple_alphabet()
+    text_encoder = CTCTextEncoder(get_simple_alphabet())
 
     # Setup dataloader instances
     dataloaders = get_dataloaders(config, text_encoder)
