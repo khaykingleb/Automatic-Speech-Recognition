@@ -95,7 +95,7 @@
   "lr_scheduler": {
     "type": "CosineAnnealingWarmRestarts",
     "args": {
-      "T_0": 100
+      "T_0": 2000
     }
   },
   "trainer": {
