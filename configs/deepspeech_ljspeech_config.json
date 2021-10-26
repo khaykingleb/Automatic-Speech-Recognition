@@ -67,7 +67,7 @@
   "data": {
     "train": {
       "batch_size": 32,
-      "num_workers": 40,
+      "num_workers": 5,
       "datasets": [
         {
           "type": "LJSpeechDataset",
@@ -79,7 +79,7 @@
     },
     "val": {
       "batch_size": 32,
-      "num_workers": 40,
+      "num_workers": 5,
       "datasets": [
         {
           "type": "LJSpeechDataset",
@@ -91,7 +91,7 @@
     },
     "test": {
       "batch_size": 32,
-      "num_workers": 40,
+      "num_workers": 5,
       "datasets": [
         {
           "type": "LJSpeechDataset",
