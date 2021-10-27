@@ -123,22 +123,24 @@ if __name__ == "__main__":
                       help="Number of workers for test dataloader")
 
     config = ConfigParser.from_args(args)
+    
     args = args.parse_args()
+
     test_data_folder = Path(args.test_data_folder)
+
     config.config["data"] = {
         "test": {
             "batch_size": args.batch_size,
             "num_workers": args.jobs,
             "datasets": [
                 {
-                    "type": "CustomDirAudioDataset",
+                    "type": "LibrispeechDataset",
                     "args": {
-                        "audio_dir": test_data_folder / "audio",
-                        "transcription_dir": test_data_folder / "transcriptions",
-			        "limit": -1
+                        "part": "test-clean"
                     }
                 }
             ]
         }
     }
+
     main(config, args.output)
