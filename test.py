@@ -106,7 +106,6 @@ if __name__ == "__main__":
     args.add_argument("-t",
                       "--test-data-folder",
                       default=None,
-                      required=True,
                       type=str,
                       help="Path to dataset")
 
@@ -123,7 +122,7 @@ if __name__ == "__main__":
                       help="Number of workers for test dataloader")
 
     config = ConfigParser.from_args(args)
-    
+
     args = args.parse_args()
 
     test_data_folder = Path(args.test_data_folder)
