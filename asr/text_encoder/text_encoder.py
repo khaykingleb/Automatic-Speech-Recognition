@@ -1,5 +1,5 @@
 import re
-from typing import List, Union, Tuple
+from typing import List, Union
 
 import json
 from pathlib import Path

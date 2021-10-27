@@ -16,6 +16,7 @@ Implementation of models for the Automatic Speech Recognition problem.
 
 ## Notebook
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/khaykingleb/Stock-Price-Forecasting/blob/main/scripts/main.ipynb)
 
 ## Getting Started
 

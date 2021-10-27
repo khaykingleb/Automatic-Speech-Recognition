@@ -6,6 +6,7 @@ tqdm
 tensorboard
 matplotlib
 
+ctcdecode
 speechbrain~=0.5.9
 torchaudio~=0.9.1
 librosa
@@ -13,3 +14,4 @@ datasets
 torch_audiomentations
 editdistance
 wandb
+ctcdecoder
