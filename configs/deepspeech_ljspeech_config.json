@@ -67,7 +67,7 @@
   "data": {
     "train": {
       "batch_size": 32,
-      "num_workers": 5,
+      "num_workers": 10,
       "datasets": [
         {
           "type": "LJSpeechDataset",
@@ -79,7 +79,7 @@
     },
     "val": {
       "batch_size": 32,
-      "num_workers": 5,
+      "num_workers": 10,
       "datasets": [
         {
           "type": "LJSpeechDataset",
@@ -91,7 +91,7 @@
     },
     "test": {
       "batch_size": 32,
-      "num_workers": 5,
+      "num_workers": 10,
       "datasets": [
         {
           "type": "LJSpeechDataset",
@@ -129,7 +129,7 @@
   "lr_scheduler": {
     "type": "CosineAnnealingWarmRestarts",
     "args": {
-      "T_0": 2000
+      "T_0": 20000
     }
   },
   "trainer": {
