@@ -21,18 +21,15 @@ from asr.utils.parse_config import ConfigParser
 warnings.filterwarnings("ignore", category=UserWarning)
 
 # Fix random seeds for reproducibility
-seed = 42 
-random.seed(seed)
-os.environ['PYTHONHASHSEED'] = str(seed)
-np.random.seed(seed)
-
-torch.manual_seed(seed)
-torch.cuda.manual_seed(seed)
-torch.cuda.manual_seed_all(seed)
-
+SEED = 42 
+random.seed(SEED)
+os.environ['PYTHONHASHSEED'] = str(SEED)
+np.random.seed(SEED)
+torch.manual_seed(SEED)
+torch.cuda.manual_seed(SEED)
+torch.cuda.manual_seed_all(SEED)
 torch.backends.cudnn.enabled = False
 torch.backends.cudnn.deterministic = True
-
 os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:2"
 
 

@@ -66,30 +66,6 @@
     }
   },
   "data": {
-    "train": {
-      "batch_size": 32,
-      "num_workers": 5,
-      "datasets": [
-        {
-          "type": "LibrispeechDataset",
-          "args": {
-            "part": "train-clean-360"
-          }
-        }
-      ]
-    },
-    "val": {
-      "batch_size": 32,
-      "num_workers": 5,
-      "datasets": [
-        {
-          "type": "LibrispeechDataset",
-          "args": {
-            "part": "dev-clean"
-          }
-        }
-      ]
-    },
     "test": {
       "batch_size": 32,
       "num_workers": 5,

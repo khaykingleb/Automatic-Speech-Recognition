@@ -14,13 +14,13 @@ from asr.utils import ROOT_PATH
 from asr.utils.parse_config import ConfigParser
 from asr.metrics.utils import calc_cer, calc_wer
 
-DEFAULT_TEST_CONFIG_PATH = ROOT_PATH / "default_test_model" / "config.json"
+DEFAULT_TEST_CONFIG_PATH = ROOT_PATH / "default_test_config.json"
 DEFAULT_CHECKPOINT_PATH = ROOT_PATH / "default_test_model" / "checkpoint.pth"
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
-def main(config, out_file=None):
+def main(config, out_file):
     logger = config.get_logger("test")
 
     # Text encoder
@@ -72,8 +72,6 @@ def main(config, out_file=None):
                                 "beam_search_wer": calc_wer(ground_trurh, pred_text_beam_search) * 100,
                                 "beam_search_cer": calc_cer(ground_trurh, pred_text_beam_search) * 100})
 
-    out_file = "default_test_model/results.json" if out_file is None else out_file
-
     with Path(out_file).open('w') as f:
         json.dump(results, f, indent=2)
 
@@ -108,6 +106,7 @@ if __name__ == "__main__":
     args.add_argument("-t",
                       "--test-data-folder",
                       default=None,
+                      required=True,
                       type=str,
                       help="Path to dataset")
 
@@ -123,7 +122,23 @@ if __name__ == "__main__":
                       type=int,
                       help="Number of workers for test dataloader")
 
+    config = ConfigParser.from_args(args)
+    args = args.parse_args()
     test_data_folder = Path(args.test_data_folder)
-
-    config = ConfigParser.from_args(DEFAULT_TEST_CONFIG_PATH)
+    config.config["data"] = {
+        "test": {
+            "batch_size": args.batch_size,
+            "num_workers": args.jobs,
+            "datasets": [
+                {
+                    "type": "CustomDirAudioDataset",
+                    "args": {
+                        "audio_dir": test_data_folder / "audio",
+                        "transcription_dir": test_data_folder / "transcriptions",
+			        "limit": -1
+                    }
+                }
+            ]
+        }
+    }
     main(config, args.output)

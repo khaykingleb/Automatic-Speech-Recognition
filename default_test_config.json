@@ -1,54 +1,25 @@
 {
-    "name": "default_test_config",
-    "overfit": false,
+    "name": "deepspeech_ljspeech_config",
     "n_gpu": 1,
     "preprocessing": {
         "sr": 22050,
+        "spectrogram_normalization": true,
         "spectrogram": {
             "type": "MelSpectrogram",
-            "args": {}
+            "args": {
+                "sample_rate": 22050,
+                "n_mels": 64
+            }
         }
-    },
-    "augmentations": {
-        "wave": [],
-        "spectrogram": []
     },
     "arch": {
-        "type": "QuartzNet",
+        "type": "Deepspeech",
         "args": {
-            "n_feats": 128
-        }
-    },
-    "data": {
-        "train": {
-            "batch_size": 20,
-            "num_workers": 10,
-            "datasets": [
-                {
-                    "type": "LibrispeechDataset",
-                    "args": {
-                        "part": "train-clean-100",
-                        "max_audio_length": 10.0,
-                        "max_text_length": 100,
-                        "limit": 60
-                    }
-                }
-            ]
-        },
-        "val": {
-            "batch_size": 20,
-            "num_workers": 10,
-            "datasets": [
-                {
-                    "type": "LibrispeechDataset",
-                    "args": {
-                        "part": "dev-clean",
-                        "max_audio_length": 10.0,
-                        "max_text_length": 100,
-                        "limit": 60
-                    }
-                }
-            ]
+            "n_feats": 64,
+            "fc_hidden": 512,
+            "fc_dropout": 0.1,
+            "gru_hidden": 512,
+            "gru_num_layers": 3
         }
     },
     "optimizer": {
@@ -75,26 +46,16 @@
             }
         }
     ],
-    "lr_scheduler": {
-        "type": "OneCycleLR",
-        "args": {
-            "steps_per_epoch": 100,
-            "epochs": 50,
-            "anneal_strategy": "cos",
-            "max_lr": 4e-3,
-            "pct_start": 0.2
-        }
-    },
     "trainer": {
-        "epochs": 50,
-        "save_dir": "saved/",
+        "epochs": 100,
+        "save_dir": "ASR/saved/",
         "save_period": 5,
         "verbosity": 2,
         "monitor": "min val_loss",
         "early_stop": 100,
         "visualize": "wandb",
         "wandb_project": "asr_project",
-        "len_epoch": 100,
+        "len_epoch": 200,
         "grad_norm_clip": 10
     }
 }
