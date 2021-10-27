@@ -51,4 +51,4 @@ class CTCTextEncoder(TextEncoder):
         char_length, voc_size = probs.shape
         assert voc_size == len(self.index_to_char)
     
-        return beam_search(probs, self.alphabet, beam_size)
+        return beam_search(probs, self.alphabet, beam_size)[0][0]

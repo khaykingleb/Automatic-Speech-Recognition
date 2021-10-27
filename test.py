@@ -71,15 +71,15 @@ def main(config, out_file):
 
                 ground_trurh = batch["text"][i]
                 pred_text_argmax = text_encoder.ctc_decode(batch["argmax"][i])
-                pred_text_beam_search = text_encoder.ctc_beam_search(batch["probs"][i], beam_size=100)[:10]
+                pred_text_beam_search = text_encoder.ctc_beam_search(batch["probs"][i], beam_size=100)
 
                 results.append({"ground_trurh": ground_trurh,
                                 "pred_text_argmax": pred_text_argmax,
                                 "argmax_wer": calc_wer(ground_trurh, pred_text_argmax) * 100,
                                 "argmax_cer": calc_cer(ground_trurh, pred_text_argmax) * 100,
                                 "pred_text_beam_search": pred_text_beam_search, 
-                                "beam_search_wer": calc_wer(ground_trurh, pred_text_beam_search[0][0]) * 100,
-                                "beam_search_cer": calc_cer(ground_trurh, pred_text_beam_search[0][0]) * 100})
+                                "beam_search_wer": calc_wer(ground_trurh, pred_text_beam_search) * 100,
+                                "beam_search_cer": calc_cer(ground_trurh, pred_text_beam_search) * 100})
 
     with Path(out_file).open('w') as f:
         json.dump(results, f, indent=2)
