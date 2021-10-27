@@ -78,8 +78,8 @@ def main(config, out_file):
                                 "argmax_wer": calc_wer(ground_trurh, pred_text_argmax) * 100,
                                 "argmax_cer": calc_cer(ground_trurh, pred_text_argmax) * 100,
                                 "pred_text_beam_search": pred_text_beam_search, 
-                                "beam_search_wer": calc_wer(ground_trurh, pred_text_beam_search) * 100,
-                                "beam_search_cer": calc_cer(ground_trurh, pred_text_beam_search) * 100})
+                                "beam_search_wer": calc_wer(ground_trurh, pred_text_beam_search[0][0]) * 100,
+                                "beam_search_cer": calc_cer(ground_trurh, pred_text_beam_search[0][0]) * 100})
 
     with Path(out_file).open('w') as f:
         json.dump(results, f, indent=2)
