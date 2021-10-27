@@ -23,8 +23,6 @@ class CTCTextEncoder(TextEncoder):
 
         self.char_to_index = {value: key for key, value in self.index_to_char.items()}
 
-        self.alphabet = alphabet
-
     def ctc_decode(self, indexes: List[int]) -> str:
         selected_indexes = []
         is_empty_token = False
@@ -50,5 +48,8 @@ class CTCTextEncoder(TextEncoder):
         assert len(probs.shape) == 2
         char_length, voc_size = probs.shape
         assert voc_size == len(self.index_to_char)
+
+        alphabet = ''.join(self.index_to_char.values())
     
-        return beam_search(probs, self.alphabet, beam_size)[0][0]
+        return beam_search(probs, alphabet, beam_size)
+        

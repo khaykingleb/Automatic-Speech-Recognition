@@ -71,7 +71,7 @@ def main(config, out_file):
 
                 ground_trurh = batch["text"][i]
                 pred_text_argmax = text_encoder.ctc_decode(batch["argmax"][i])
-                pred_text_beam_search = text_encoder.ctc_beam_search(batch["probs"][i], beam_size=100)
+                pred_text_beam_search = text_encoder.ctc_beam_search(batch["probs"][i].cpu().detach().numpy(), beam_size=100)
 
                 results.append({"ground_trurh": ground_trurh,
                                 "pred_text_argmax": pred_text_argmax,
