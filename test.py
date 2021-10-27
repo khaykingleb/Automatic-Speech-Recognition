@@ -125,8 +125,6 @@ if __name__ == "__main__":
 
     args = args.parse_args()
 
-    test_data_folder = Path(args.test_data_folder)
-
     config.config["data"] = {
         "test": {
             "batch_size": args.batch_size,
