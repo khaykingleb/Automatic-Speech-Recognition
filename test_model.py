@@ -9,14 +9,15 @@ from asr.datasets.utils import get_dataloaders
 from asr.text_encoder.ctc_text_encoder import CTCTextEncoder
 from asr.text_encoder.text_encoder import get_simple_alphabet
 import asr.models as module_model
-import asr.loss as module_loss
-import asr.metrics as module_metric
 from asr.trainer import Trainer
 from asr.utils import ROOT_PATH
 from asr.utils.parse_config import ConfigParser
+from asr.metrics.utils import calc_cer, calc_wer
 
 DEFAULT_TEST_CONFIG_PATH = ROOT_PATH / "default_test_model" / "config.json"
 DEFAULT_CHECKPOINT_PATH = ROOT_PATH / "default_test_model" / "checkpoint.pth"
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
 def main(config, out_file=None):
@@ -32,10 +33,6 @@ def main(config, out_file=None):
     model = config.init_obj(config["arch"], module_model, n_class=len(text_encoder))
     logger.info(model)
 
-    # Get function handles of loss and metrics
-    loss_fn = getattr(module_loss, config["loss"])
-    metric_fns = [getattr(module_metric, met) for met in config["metrics"]]
-
     logger.info("Loading checkpoint: {} ...".format(config.resume))
     checkpoint = torch.load(config.resume)
     state_dict = checkpoint["state_dict"]
@@ -46,7 +43,6 @@ def main(config, out_file=None):
     model.load_state_dict(state_dict)
 
     # Prepare model for testing
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = model.to(device)
     model.eval()
 
@@ -63,11 +59,18 @@ def main(config, out_file=None):
             batch["argmax"] = batch["probs"].argmax(-1)
 
             for i in range(len(batch["text"])):
-                results.append({"ground_trurh": batch["text"][i],
-                                "pred_text_argmax": text_encoder.ctc_decode(batch["argmax"][i]),
-                                "pred_text_beam_search": text_encoder\
-                                                         .ctc_beam_search(batch["probs"], 
-                                                                          beam_size=100)[:10]})
+
+                ground_trurh = batch["text"][i]
+                pred_text_argmax = text_encoder.ctc_decode(batch["argmax"][i])
+                pred_text_beam_search = text_encoder.beam_search(batch["probs"][i], beam_size=100)[:10]
+
+                results.append({"ground_trurh": ground_trurh,
+                                "pred_text_argmax": pred_text_argmax,
+                                "argmax_wer": calc_wer(ground_trurh, pred_text_argmax) * 100,
+                                "argmax_cer": calc_cer(ground_trurh, pred_text_argmax) * 100,
+                                "pred_text_beam_search": pred_text_beam_search, 
+                                "beam_search_wer": calc_wer(ground_trurh, pred_text_beam_search) * 100,
+                                "beam_search_cer": calc_cer(ground_trurh, pred_text_beam_search) * 100})
 
     out_file = "default_test_model/results.json" if out_file is None else out_file
 
