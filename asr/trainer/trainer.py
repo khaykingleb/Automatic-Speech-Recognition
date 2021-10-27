@@ -142,7 +142,7 @@ class Trainer(BaseTrainer):
             batch.update(outputs)
         else:
             batch["logits"] = outputs
-
+            
         batch["log_probs"] = F.log_softmax(batch["logits"], dim=-1)
         batch["log_probs_length"] = self.model.transform_input_lengths(batch["spectrogram_length"])
         batch["loss"] = self.criterion(**batch)

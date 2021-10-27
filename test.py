@@ -2,6 +2,8 @@ import argparse
 import json
 from pathlib import Path
 
+import torch.nn.functional as F
+
 import torch
 from tqdm import tqdm
 
@@ -52,8 +54,15 @@ def main(config, out_file):
         for _, batch in enumerate(tqdm(dataloaders["test"])):
             batch = Trainer.move_batch_to_device(batch, device)
 
-            batch["logits"] = model(**batch)
-            batch["log_probs"] = torch.nn.functional.log_softmax(batch["logits"], dim=-1)
+            outputs = model(**batch)
+
+            if type(outputs) is dict:
+                batch.update(outputs)
+            else:
+                batch["logits"] = outputs
+
+        
+            batch["log_probs"] = F.log_softmax(batch["logits"], dim=-1)
             batch["log_probs_length"] = model.transform_input_lengths(batch["spectrogram_length"])
             batch["probs"] = batch["log_probs"].exp().cpu()
             batch["argmax"] = batch["probs"].argmax(-1)
